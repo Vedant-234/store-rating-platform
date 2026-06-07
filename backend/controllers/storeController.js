@@ -1,6 +1,7 @@
 const {
     createStore,
     findStoreByEmail,
+    findStoreByOwnerId,
     getStores,
     getStoresForUser
 } = require("../models/storeModel");
@@ -67,14 +68,9 @@ const addStore = (req, res) => {
                 });
             }
 
-            createStore(
-                {
-                    name,
-                    email,
-                    address,
-                    owner_id
-                },
-                (err, result) => {
+            findStoreByOwnerId(
+                owner_id,
+                (err, existingStores) => {
 
                     if (err) {
                         return res.status(500).json({
@@ -83,18 +79,39 @@ const addStore = (req, res) => {
                         });
                     }
 
-                    return res.status(201).json({
-                        success: true,
-                        message: "Store created successfully"
-                    });
+                    if (existingStores.length > 0) {
+                        return res.status(400).json({
+                            success: false,
+                            message: "Owner already has a store"
+                        });
+                    }
 
+                    createStore(
+                        {
+                            name,
+                            email,
+                            address,
+                            owner_id
+                        },
+                        (err, result) => {
+
+                            if (err) {
+                                return res.status(500).json({
+                                    success: false,
+                                    message: err.message
+                                });
+                            }
+
+                            return res.status(201).json({
+                                success: true,
+                                message: "Store created successfully"
+                            });
+                        }
+                    );
                 }
             );
-
         });
-
     });
-
 };
 
 // Get All Stores
@@ -119,32 +136,24 @@ const getAllStores = (req, res) => {
         (err, result) => {
 
             if (err) {
-
                 return res.status(500).json({
                     success: false,
                     message: err.message
                 });
-
             }
 
             return res.status(200).json({
                 success: true,
                 data: result
             });
-
         }
     );
-
 };
 
 // Normal User - Get Stores
-const getStoresForNormalUser = (
-    req,
-    res
-) => {
+const getStoresForNormalUser = (req, res) => {
 
-    const userId =
-        req.user.userId;
+    const userId = req.user.userId;
 
     const {
         page = 1,
@@ -166,22 +175,18 @@ const getStoresForNormalUser = (
         (err, result) => {
 
             if (err) {
-
                 return res.status(500).json({
                     success: false,
                     message: err.message
                 });
-
             }
 
             return res.status(200).json({
                 success: true,
                 data: result
             });
-
         }
     );
-
 };
 
 module.exports = {

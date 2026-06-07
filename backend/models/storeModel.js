@@ -50,6 +50,26 @@ const findStoreByEmail = (email, callback) => {
     );
 };
 
+const findStoreByOwnerId = (
+    ownerId,
+    callback
+) => {
+
+    const query = `
+        SELECT *
+        FROM stores
+        WHERE owner_id = ?
+        AND deleted_at IS NULL
+    `;
+
+    connection.query(
+        query,
+        [ownerId],
+        callback
+    );
+
+};
+
 // Get Stores with Search, Sorting & Pagination
 const getStores = (options, callback) => {
 
@@ -374,5 +394,6 @@ module.exports = {
     getStores,
     getStoresForUser,
     getOwnerDashboard,
-    getOwnerRatings
+    getOwnerRatings,
+    findStoreByOwnerId
 };
