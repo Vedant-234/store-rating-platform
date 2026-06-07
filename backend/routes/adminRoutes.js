@@ -57,11 +57,5 @@ router.get(
     getUserById
 );
 
-router.post(
-    "/users",
-    verifyToken,
-    isAdmin,
-    createUserByAdmin
-);
 
 module.exports = router;
