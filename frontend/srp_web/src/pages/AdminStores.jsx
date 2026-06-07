@@ -5,9 +5,9 @@ import Layout from "../components/Layout";
 function AdminStores() {
 
     const [stores, setStores] = useState([]);
+    const [owners, setOwners] = useState([]);
 
     const [search, setSearch] = useState("");
-
     const [page, setPage] = useState(1);
 
     const [storeData, setStoreData] = useState({
@@ -20,6 +20,7 @@ function AdminStores() {
     useEffect(() => {
 
         fetchStores();
+        fetchOwners();
 
     }, [page]);
 
@@ -42,6 +43,39 @@ function AdminStores() {
                 );
 
             setStores(
+                response.data.data
+            );
+
+        }
+        catch (error) {
+
+            console.log(error);
+
+        }
+
+    };
+
+    const fetchOwners = async () => {
+
+        try {
+
+            const token =
+                localStorage.getItem("token");
+
+            const response = await api.get(
+                "/admin/owners",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            console.log("Owners API:", response.data);
+
+            setOwners(response.data.data);
+
+            setOwners(
                 response.data.data
             );
 
@@ -94,6 +128,7 @@ function AdminStores() {
             });
 
             fetchStores();
+            fetchOwners();
 
         }
         catch (error) {
@@ -129,6 +164,9 @@ function AdminStores() {
                 onChange={handleChange}
             />
 
+            <br />
+            <br />
+
             <input
                 type="email"
                 name="email"
@@ -136,6 +174,9 @@ function AdminStores() {
                 value={storeData.email}
                 onChange={handleChange}
             />
+
+            <br />
+            <br />
 
             <input
                 type="text"
@@ -145,13 +186,36 @@ function AdminStores() {
                 onChange={handleChange}
             />
 
-            <input
-                type="number"
+            <br />
+            <br />
+
+            <select
                 name="owner_id"
-                placeholder="Owner ID"
                 value={storeData.owner_id}
                 onChange={handleChange}
-            />
+            >
+
+                <option value="">
+                    Select Owner
+                </option>
+
+                {owners.map(
+                    (owner) => (
+
+                        <option
+                            key={owner.user_id}
+                            value={owner.user_id}
+                        >
+                            {owner.name} - {owner.email}
+                        </option>
+
+                    )
+                )}
+
+            </select>
+
+            <br />
+            <br />
 
             <button
                 onClick={addStore}
@@ -180,7 +244,10 @@ function AdminStores() {
             />
 
             <button
-                onClick={fetchStores}
+                onClick={() => {
+                    setPage(1);
+                    fetchStores();
+                }}
             >
                 Search
             </button>

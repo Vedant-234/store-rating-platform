@@ -125,10 +125,31 @@ const updatePassword = (
 
 };
 
+const getOwners = (callback) => {
+
+    const query = `
+    SELECT
+        user_id,
+        name,
+        email
+    FROM users
+    WHERE role = 'OWNER'
+    AND deleted_at IS NULL
+    ORDER BY name
+    `;
+
+    connection.query(
+        query,
+        callback
+    );
+
+};
+
 module.exports = {
     createUser,
     findUserByEmail,
     findUserById,
     getUserDetails,
-    updatePassword
+    updatePassword,
+    getOwners
 };

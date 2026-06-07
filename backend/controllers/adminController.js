@@ -5,7 +5,9 @@ const {
 
 const {
     getUserDetails,
+    getOwners
 } = require("../models/userModel");
+
 
 
 const getDashboardStats = (req,res)=>{
@@ -126,8 +128,36 @@ const getUserById = (req, res) => {
 
 };
 
+const getAllOwners = (
+    req,
+    res
+) => {
+
+    getOwners(
+        (err, result) => {
+
+            if (err) {
+
+                return res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+
+            }
+
+            return res.status(200).json({
+                success: true, 
+                data: result
+            });
+
+        }
+    );
+
+};
+
 module.exports = {
     getDashboardStats,
     getAllUsers,
-    getUserById
+    getUserById,
+    getAllOwners
 };
