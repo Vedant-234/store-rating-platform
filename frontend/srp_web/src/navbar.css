@@ -1,0 +1,15 @@
+.navbar{
+    background:#333;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin-right:15px;
+}
+
+.navbar button{
+    margin-left:10px;
+}

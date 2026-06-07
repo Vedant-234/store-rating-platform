@@ -1,0 +1,111 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    padding:20px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:white;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+th{
+    background:#333;
+    color:white;
+}
+
+button{
+    padding:8px 12px;
+    cursor:pointer;
+    border:none;
+    border-radius:5px;
+}
+
+input,
+select{
+    padding:8px;
+    margin:5px;
+}
+
+/* Navbar */
+
+.navbar{
+    background:#333;
+    padding:15px;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.navbar h2{
+    color:white;
+    margin-right:auto;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+}
+
+.navbar button{
+    background:white;
+}
+
+/* Dashboard Cards */
+
+.dashboard{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    min-width:220px;
+    box-shadow:
+        0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Auth Pages */
+
+.auth-container{
+    width:400px;
+    margin:80px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:
+        0 2px 10px rgba(0,0,0,0.1);
+}
+
+.auth-container input{
+    width:100%;
+    margin-bottom:10px;
+}
+
+.auth-container button{
+    width:100%;
+}
