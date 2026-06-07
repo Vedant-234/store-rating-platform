@@ -12,7 +12,8 @@ const {
 const {
     getDashboardStats,
     getAllUsers,
-    getUserById
+    getUserById,
+    getAllOwners
 } = require("../controllers/adminController");
 
 const {
@@ -57,5 +58,11 @@ router.get(
     getUserById
 );
 
+router.get(
+    "/owners",
+    verifyToken,
+    isAdmin,
+    getAllOwners
+);
 
 module.exports = router;
